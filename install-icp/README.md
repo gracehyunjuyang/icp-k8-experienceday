@@ -7,29 +7,27 @@
 
 ### Pre-requisite 
 `Hosts` 파일 수정하기 
-~~~
+```
 vi /etc/hosts
-~~~
+```
 
 1. 할당받은 VM의 IP 주소를 확인합니다. 
-
-
 
 2. hostname과 IP를 추가합니다. 
 **hostname**은 vm0[N] 입니다. 예를 들어, 저는 _**vm01**_ 이 hostname 입니다. 
 세션에 들어오시면서 받으신 VM의 hostname을 기억해주세요! 
 
-[완료된 화면]
-![Alt host file](./images/install-icp-1.png)
+    [완료된 화면]
+    ![Alt host file](./images/install-icp-1.png)
 
 3. `127.0.1.1`은 주석처리 해주세요. 
-```
-169.56.84.172   icp
+    ```
+    169.56.84.172   icp
 
 
-#127.0.1.1      vm01.ibmcloud.com       vm01
-```
-![Alt host file](./images/install-icp-2.png)
+    #127.0.1.1      vm01.ibmcloud.com       vm01
+    ```
+    ![Alt host file](./images/install-icp-2.png)
 
 ### Step 1: Boot Node 에 Docker를 설치하기 (구성 완료. SKIP)
 **Boot Node** 는 Kubernetes 클러스터를 설치, 업데이트하는 노드입니다. 
@@ -41,15 +39,15 @@ Boot Node 에 Docker를 설치하면 나머지 노드에는 IBM Cloud Private �
 SSH 혹은 Putty로 실습 환경 IP에 접속합니다. 
 
 2. [Docker Hub](https://hub.docker.com/r/ibmcom/icp-inception/)로부터 IBM Cloud Private-CE 설치 이미지 다운로드합니다.
-```
-docker pull ibmcom/icp-inception:3.1.2
-```
+    ```
+    docker pull ibmcom/icp-inception:3.1.2
+    ```
 
 3. IBM Cloud Private 설정 파일을 저장하기 위한 설치 디렉토리 생성
-```
-sudo mkdir /opt/ibm-cloud-private-3.1.2;
-cd /opt/ibm-cloud-private-3.1.2
-```
+    ```
+    sudo mkdir /opt/ibm-cloud-private-3.1.2;
+    cd /opt/ibm-cloud-private-3.1.2
+    ```
  
  4. 설정 파일 압축 풀기
     ```
@@ -77,29 +75,29 @@ cd /opt/ibm-cloud-private-3.1.2
     ``` 
 
  8. `/opt/ibm-cloud-private-3.1.2/cluster/hosts` 파일에 노드의 IP 주소 입력
- ```
- vi /opt/ibm-cloud-private-3.1.2/cluster/hosts
- ``` 
+    ```
+    vi /opt/ibm-cloud-private-3.1.2/cluster/hosts
+    ``` 
 
- 아래와 같이 hosts 파일을 수정합니다. 
- `169.56.84.172` 대신 각자 받으신 VM 의 IP를 입력하시면 됩니다. 
+    아래와 같이 hosts 파일을 수정합니다. 
+    `169.56.84.172` 대신 각자 받으신 VM 의 IP를 입력하시면 됩니다. 
  
-```
-[master]
-169.56.84.172
+    ```
+    [master]
+    169.56.84.172
 
-[worker]
-169.56.84.172
+    [worker]
+    169.56.84.172
 
-[proxy]
-169.56.84.172
+    [proxy]
+    169.56.84.172
 
-#[management]
-#4.4.4.4
+    #[management]
+    #4.4.4.4
 
-#[va]
-#5.5.5.5
-```
+    #[va]
+    #5.5.5.5
+    ```
 
 
 ### Step 3: 클러스터 설치 옵션
@@ -111,86 +109,93 @@ vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
 
 1. 로깅, 모니터링, 미터링 서비스는 기본적으로 설치하도록 명시 되어 있습니다. 만약 metering, monitoring 등의 서비스를 설치하지 않고자 할 때는 아래 `management_services` 값을 수정할 수 있습니다. 본 튜토리얼에서는 기본적인 관리 서비스 (metering, monitoring, service catalog)를 모두 설치합니다. Microservice mesh 인 Istio 도 함께 설치합니다.
   
-```
-## You can disable following services if they are not needed:
-#   custom-metrics-adapter
-#   image-security-enforcement
-#   istio
-#   metering
-#   logging
-#   monitoring
-#   service-catalog
-#   storage-minio
-#   storage-glusterfs
-#   vulnerability-advisor
-#   node-problem-detector-draino
-#   multicluster-hub: disabled
-#   multicluster-endpoint: disabled
+    ```
+    ## You can disable following services if they are not needed:
+    #   custom-metrics-adapter
+    #   image-security-enforcement
+    #   istio
+    #   metering
+    #   logging
+    #   monitoring
+    #   service-catalog
+    #   storage-minio
+    #   storage-glusterfs
+    #   vulnerability-advisor
+    #   node-problem-detector-draino
+    #   multicluster-hub: disabled
+    #   multicluster-endpoint: disabled
 
-management_services:
-istio: enabled
-vulnerability-advisor: disabled
-storage-glusterfs: disabled
-storage-minio: disabled
-platform-security-netpols: disabled
-node-problem-detector-draino: disabled
-multicluster-hub: disabled
-multicluster-endpoint: disabled
-```
-![Alt](./images/install-icp-3.png)
+    management_services:
+    istio: enabled
+    vulnerability-advisor: disabled
+    storage-glusterfs: disabled
+    storage-minio: disabled
+    platform-security-netpols: disabled
+    node-problem-detector-draino: disabled
+    multicluster-hub: disabled
+    multicluster-endpoint: disabled
+    ```
+    ![Alt](./images/install-icp-3.png)
 
 3. 관리자 username과 password 설정 
-```
-default_admin_user: admin
-default_admin_password: admin
-password_rules:
-- '(.*)'
-```
-![Alt](./images/install-icp-4.png)
+    ```
+    default_admin_user: admin
+    default_admin_password: admin
+    password_rules:
+    - '(.*)'
+    ```
+    ![Alt](./images/install-icp-4.png)
 
 4. Istio 설치를 위해 아래와 같이 설정 추가 
-```
-istio:
-kiali:
-    enabled: true
-grafana:
-    enabled: true
-prometheus:
-    enabled: true
+    ```
+    istio:
+    kiali:
+        enabled: true
+    grafana:
+        enabled: true
+    prometheus:
+        enabled: true
 
-## Istio addons security Settings
-## If user wants to configure Istio addons securty settings
-## parameters should be configured through config.yaml
-istio_addon:
-grafana:
-    username: admin
-    passphrase: admin
-kiali:
-    username: admin
-    passphrase: admin
-```
-![Alt](./images/install-icp-5.png)
-3. 그 외에도 Ansible 설치 스크립트 실행시 다양한 옵션을 명시할 수 있습니다. 자세한 옵션은 [Config.yaml 파일로 클러스터 커스터마이즈 하기](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/installing/config_yaml.html) 를 참고하시기 바랍니다. 
- <!--https://asciinema.org/a/ycmWE0uQ06tQXZUA9yTU0eH4H-->
+    ## Istio addons security Settings
+    ## If user wants to configure Istio addons securty settings
+    ## parameters should be configured through config.yaml
+    istio_addon:
+    grafana:
+        username: admin
+        passphrase: admin
+    kiali:
+        username: admin
+        passphrase: admin
+    ```
+    ![Alt](./images/install-icp-5.png)
+
+5. 그 외에도 Ansible 설치 스크립트 실행시 다양한 옵션을 명시할 수 있습니다. 자세한 옵션은 [Config.yaml 파일로 클러스터 커스터마이즈 하기](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/installing/config_yaml.html) 를 참고하시기 바랍니다. 
+    <!--https://asciinema.org/a/ycmWE0uQ06tQXZUA9yTU0eH4H-->
 
 
 ## Step 4: IBM Cloud Private 설치 
 1. 설치 디렉토리 내 `cluster` 폴더로 이동 
-```
-cd /opt/ibm-cloud-private-ce-2.1.0.3/cluster
-```
+    ```
+    cd /opt/ibm-cloud-private-3.1.2/cluster
+    ```
 2. IBM Cloud Private 클러스터 설치 
-```
-sudo docker run --net=host -t -e LICENSE=accept \
--v "$(pwd)":/installer/cluster ibmcom/icp-inception:2.1.0.3 install
-```
+    ```
+    docker run --net=host -t -e LICENSE=accept \
+    -v "$(pwd)":/installer/cluster ibmcom/icp-inception:3.1.2 install
+    ```
+
+    Background로 실행하기 위해서는 아래의 커맨드 수행
+    ```
+    nohup docker run --net=host -t -e LICENSE=accept \
+    -v "$(pwd)":/installer/cluster ibmcom/icp-inception:3.1.2 install &
+    ```
 
 3. 설치가 성공적으로 완료시 아래와 같이 뜹니다. 
-```
-UI URL is https://master_ip:8443 , default username/password is admin/admin
-```
+    ```
+    UI URL is https://master_ip:8443 , default username/password is admin/admin
+    ```
 
-여기서 `master_ip`는 IBM Cloud Private master node의 IP 주소로, 실습 환경으로 부여받은 VM 의 IP와 같습니다. 
+    여기서 `master_ip`는 IBM Cloud Private master node의 IP 주소로, 실습 환경으로 부여받은 VM 의 IP와 같습니다. 
 
 자, 이제 나만의 Kubernetes 환경이 여러가지 관리 서비스와 함께 설치 되었습니다. 
 UI URL에 접속하여 대시보드를 둘러보세요!
