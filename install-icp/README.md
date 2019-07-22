@@ -203,6 +203,34 @@ vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
 
     여기서 `master_ip`는 IBM Cloud Private master node의 IP 주소로, 실습 환경으로 부여받은 VM 의 IP와 같습니다. 
 
+4. 설치 이후에 kube-dns 설정을 다시 업데이트 합니다. 
+    ```
+    kubectl edit cm kube-dns --namespace=kube-system
+    ```
+
+    ```
+        apiVersion: v1
+    data:
+    Corefile: |
+        .:53 {
+            errors
+            health
+            kubernetes cluster.local in-addr.arpa ip6.arpa {
+                pods insecure
+                upstream
+                fallthrough in-addr.arpa ip6.arpa
+            }
+            prometheus :9153
+    -        proxy . /etc/resolv.conf
+    +        proxy . 8.8.8.8
+            cache 30
+            reload
+        }
+    kind: ConfigMap
+    ```
+    ![Alt](./images/install-icp-7.png)
+
+
 자, 이제 나만의 Kubernetes 환경이 여러가지 관리 서비스와 함께 설치 되었습니다. 
 UI URL에 접속하여 대시보드를 둘러보세요!
 
