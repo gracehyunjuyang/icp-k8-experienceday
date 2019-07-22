@@ -6,6 +6,10 @@
 
 ![bookinfo arch](./images/istio-basic-0.png)
 
+이번 실습에서는 `istio-demo` 네임스페이스를 사용합니다. 
+
+먼저 Namespace 를 새로 생성하고 몇가지 보안 설정을 하겠습니다. 
+
 ## 1. Istio sidecar 주입 (injection) 설정
 배포되는 애플리케이션 컨테이너를 istio service mesh 에서 관리 하도록 하기 위해서는 `poxy sidecar(Envoy)`를 주입해야 하는데,
 sidecar는 아래 두가지 방법으로 배포가 가능합니다.
@@ -14,6 +18,7 @@ sidecar는 아래 두가지 방법으로 배포가 가능합니다.
 * 자동 주입 - 특정 namespace 에 애플리케이션 컨테이너 배포시 별도의 명령어 없이 sidecar가 자동 주입 되도록 label 설정
 
 이 중에서 이번 튜토리얼에서는 **auto injection** 을 설정해 봅니다.
+
 
 1. `default` namespace 정보 확인
 ~~~

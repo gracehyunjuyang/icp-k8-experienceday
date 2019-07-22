@@ -51,30 +51,25 @@ Istio 서비스 메쉬 컴포넌트는 `istio-system` 이라는 namespace에 위
   echo http://${GRAFANA_URL}/
   ```
   ![istio Grafana url](./images/istio-setup-3.png)
-
   화면에 출력된 Grafana URL을 브라우저 주소창에 입력 후 접속하여 Istio 대시보드가 Grafana 에서 보여짐을 확인
-
 
   ![istio Grafana url](./images/istio-setup-4.png)
   좌측 상단의 **Home** 클릭해 대시보드 리스트 확인
 
   ![istio Grafana url](./images/istio-setup-5.png)
-
-
-* Promtheus 서비스 외부로 노출
-  ~~~
-  kubectl expose service prometheus --type=NodePort --name=istio-prometheus-svc 
-  ~~~
-  ![istio Grafana url](./images/istio-setup-6.png)
-  ~~~
-  export PROMETHEUS_URL=$(kubectl get po -l app=prometheus -n istio-system -o 'jsonpath={.items[0].status.hostIP}'):$(kubectl get svc istio-prometheus-svc -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
-  ~~~
-  ~~~
-  echo http://${PROMETHEUS_URL}/
-  ~~~
-
-  ![istio prometheus](./images/istio-setup-7.png)
-
+ 
+ * Promtheus 서비스 외부로 노출  
+      ~~~
+      kubectl expose service prometheus --type=NodePort --name=istio-prometheus-svc 
+      ~~~
+      ![istio Grafana url](./images/istio-setup-6.png)
+      ~~~
+      export PROMETHEUS_URL=$(kubectl get po -l app=prometheus -n istio-system -o 'jsonpath={.items[0].status.hostIP}'):$(kubectl get svc istio-prometheus-svc -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
+      ~~~
+      ~~~
+      echo http://${PROMETHEUS_URL}/
+      ~~~  
+      ![istio prometheus](./images/istio-setup-7.png)  
 * Kiali 서비스는 이미 ingress로 설정되어 있음 
   ~~~
   https://node-ip:8443/kiali
@@ -82,6 +77,20 @@ Istio 서비스 메쉬 컴포넌트는 `istio-system` 이라는 namespace에 위
   username/password : *admin*/*admin*
   ![istio kiali 1](./images/istio-setup-8.png)
   ![istio kiali 2](./images/istio-setup-9.png)
+5. 데모 애플리케이션을 배포할 네임스페이스 생성 
+이번 실습에서는 `istio-demo` 네임스페이스를 사용합니다. 
+먼저 Namespace 를 새로 생성하고 몇가지 보안 설정을 하겠습니다. 
+
+![istio](./images/istio-setup-11.png)
+![istio](./images/istio-setup-12.png)
+![istio](./images/istio-setup-13.png)
+
+![istio](./images/istio-setup-15.png)
+![istio](./images/istio-setup-16.png)
+![istio](./images/istio-setup-17.png)
+![istio](./images/istio-setup-18.png)
+![istio](./images/istio-setup-19.png)
+
 
 <!--2. istioctl 설치하기 (SKIP!)
 2-1. 최신 버전 istioctl 다운로드
@@ -103,3 +112,4 @@ cd istio-1.0.4
 export PATH=$PWD/bin:$PATH
 ~~~
 -->
+
