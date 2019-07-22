@@ -169,6 +169,12 @@ vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
     ```
     ![Alt](./images/install-icp-5.png)
 
+5. Loopback dns 을 true로 설정 
+    ```
+    loopback_dns: true
+    ```
+    ![Alt](./images/install-icp-6.png)
+
 5. 그 외에도 Ansible 설치 스크립트 실행시 다양한 옵션을 명시할 수 있습니다. 자세한 옵션은 [Config.yaml 파일로 클러스터 커스터마이즈 하기](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/installing/config_yaml.html) 를 참고하시기 바랍니다. 
     <!--https://asciinema.org/a/ycmWE0uQ06tQXZUA9yTU0eH4H-->
 
