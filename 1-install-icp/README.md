@@ -106,6 +106,20 @@ SSH 혹은 Putty로 실습 환경 IP에 접속합니다.
 ```
 vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
 ```
+1. 관리자 username과 password 설정 
+    ```
+    default_admin_user: admin
+    default_admin_password: admin
+    password_rules:
+    - '(.*)'
+    ```
+    ![Alt](./images/install-icp-4.png)
+
+1. Loopback dns 을 true로 설정 
+    ```
+    loopback_dns: true
+    ```
+    ![Alt](./images/install-icp-6.png)
 
 1. 로깅, 모니터링, 미터링 서비스는 기본적으로 설치하도록 명시 되어 있습니다. 만약 metering, monitoring 등의 서비스를 설치하지 않고자 할 때는 아래 `management_services` 값을 수정할 수 있습니다. 본 튜토리얼에서는 기본적인 관리 서비스 (metering, monitoring, service catalog)를 모두 설치합니다. Microservice mesh 인 Istio 도 함께 설치합니다.
   
@@ -126,56 +140,41 @@ vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
     #   multicluster-endpoint: disabled
 
     management_services:
-    istio: enabled
-    vulnerability-advisor: disabled
-    storage-glusterfs: disabled
-    storage-minio: disabled
-    platform-security-netpols: disabled
-    node-problem-detector-draino: disabled
-    multicluster-hub: disabled
-    multicluster-endpoint: disabled
+      istio: enabled
+      vulnerability-advisor: disabled
+      storage-glusterfs: disabled
+      storage-minio: disabled
+      platform-security-netpols: disabled
+      node-problem-detector-draino: disabled
+      multicluster-hub: disabled
+      multicluster-endpoint: disabled
     ```
     ![Alt](./images/install-icp-3.png)
 
-3. 관리자 username과 password 설정 
-    ```
-    default_admin_user: admin
-    default_admin_password: admin
-    password_rules:
-    - '(.*)'
-    ```
-    ![Alt](./images/install-icp-4.png)
-
-4. Istio 설치를 위해 아래와 같이 설정 추가 
+1. Istio 설치를 위해 아래와 같이 설정 추가 
     ```
     istio:
-    kiali:
+      kiali:
         enabled: true
-    grafana:
+      grafana:
         enabled: true
-    prometheus:
+      prometheus:
         enabled: true
 
     ## Istio addons security Settings
     ## If user wants to configure Istio addons securty settings
     ## parameters should be configured through config.yaml
     istio_addon:
-    grafana:
+      grafana:
         username: admin
         passphrase: admin
-    kiali:
+      kiali:
         username: admin
         passphrase: admin
     ```
     ![Alt](./images/install-icp-5.png)
 
-5. Loopback dns 을 true로 설정 
-    ```
-    loopback_dns: true
-    ```
-    ![Alt](./images/install-icp-6.png)
-
-5. 그 외에도 Ansible 설치 스크립트 실행시 다양한 옵션을 명시할 수 있습니다. 자세한 옵션은 [Config.yaml 파일로 클러스터 커스터마이즈 하기](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/installing/config_yaml.html) 를 참고하시기 바랍니다. 
+1. 그 외에도 Ansible 설치 스크립트 실행시 다양한 옵션을 명시할 수 있습니다. 자세한 옵션은 [Config.yaml 파일로 클러스터 커스터마이즈 하기](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.2/installing/config_yaml.html) 를 참고하시기 바랍니다. 
     <!--https://asciinema.org/a/ycmWE0uQ06tQXZUA9yTU0eH4H-->
 
 
