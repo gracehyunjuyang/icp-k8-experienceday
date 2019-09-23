@@ -27,7 +27,9 @@ vi /etc/hosts
 
     #127.0.1.1      vm01.ibmcloud.com       vm01
     ```
-    ![Alt host file](./images/install-icp-2.png)
+
+    완료된 화면은 다음과 유사합니다.
+    ![Alt host file](./images/install-icp-8.png)
 
 ### Step 1: Boot Node 에 Docker를 설치하기 (구성 완료. SKIP)
 **Boot Node** 는 Kubernetes 클러스터를 설치, 업데이트하는 노드입니다. 
