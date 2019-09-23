@@ -230,11 +230,16 @@ vi /opt/ibm-cloud-private-3.1.2/cluster/config.yaml
     ![Alt](./images/install-icp-7.png)
 
     ```
-    [root@kvm-014377 ~]# kubectl get po -n kube-system |grep kube-dns 
-    
+    kubectl get po -n kube-system |grep kube-dns 
+    ```
+    위의 명령어를 입력하여 kube-dns 관련 pod의 이름을 검색하면, kube-dns 관련 Pod의 자원 이름을 확인할 수 있습니다. (kube-dns-xxx)
+    ```
     kube-dns-ldtqc 1/1 Running 0 30m
-    
-    [root@kvm-014377 ~]# kubectl delete po kube-dns-ldtqc -n kube-system pod "kube-dns-ldtqc" deleted
+    ```
+    아래의 명령어로 kube-dns-xxx 인 Pod 를 삭제합니다.
+    pod 삭제시 조금 전 수정한 configuration 값을 반영하여 새로 pod가 생성됩니다.
+    ```
+    kubectl delete po kube-dns-ldtqc -n kube-system 
     ```
 
 
